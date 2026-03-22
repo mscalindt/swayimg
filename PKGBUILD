@@ -1,0 +1,72 @@
+# Maintainer: Brett Cornwall <ainola@archlinux.org>
+# Maintainer: Robin Candau <antiz@archlinux.org>
+# Contributor: Artem Senichev <artemsen@gmail.com>
+
+pkgname=swayimg
+pkgver=4.7
+pkgrel=1
+pkgdesc='A lightweight image viewer for Wayland display servers'
+arch=('x86_64')
+license=('MIT')
+makedepends=(
+    'bash-completion'  # Meson requirement
+    'meson'
+    'ninja'
+    'wayland-protocols'
+)
+depends=(
+    'cairo'
+    'hicolor-icon-theme'
+    'libavif'
+    'libdrm'
+    'libexif.so'
+    'libfontconfig.so'
+    'libfreetype.so'
+    'libgif.so'
+    'libgobject-2.0.so'
+    'libheif'
+    'libjpeg.so'
+    'libjson-c.so'
+    'libjxl.so'
+    'libpng'
+    'libraw'
+    'librsvg-2.so'
+    'libsixel'
+    'libtiff.so'
+    'libwayland-client.so'
+    'libwebp.so'
+    'libwebpdemux.so'
+    'libxkbcommon'
+    'openexr'
+)
+url='https://github.com/mscalindt/swayimg'
+source=("$pkgname-$pkgver.tar.gz::https://github.com/artemsen/swayimg/archive/v$pkgver.tar.gz")
+sha256sums=('342952aa30f62f163dfcb36448d7f2a860abf972bb24690d2e49b28b6f2ba7cc')
+
+build() {
+    arch-meson build ${pkgname}-${pkgver} \
+        -D bash=enabled \
+        -D desktop=true \
+        -D exif=enabled \
+        -D gif=enabled \
+        -D heif=enabled \
+        -D jpeg=enabled \
+        -D jxl=enabled \
+        -D man=true \
+        -D png=enabled \
+        -D sixel=enabled \
+        -D svg=enabled \
+        -D tiff=enabled \
+        -D version="$pkgver" \
+        -D webp=enabled \
+        -D zsh=enabled
+    ninja -C build
+}
+
+package(){
+    DESTDIR="$pkgdir" ninja -C build install
+
+    cd "$pkgname-$pkgver"
+    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
+    install -Dm644 README.md -t "$pkgdir/usr/share/doc/$pkgname/"
+}
