@@ -2,7 +2,7 @@
 # Maintainer: Robin Candau <antiz@archlinux.org>
 # Contributor: Artem Senichev <artemsen@gmail.com>
 
-pkgname=swayimg
+pkgname=swayimg4.7
 pkgver=4.7
 pkgrel=1
 pkgdesc='A lightweight image viewer for Wayland display servers'
@@ -40,11 +40,11 @@ depends=(
     'openexr'
 )
 url='https://github.com/mscalindt/swayimg'
-source=("$pkgname-$pkgver.tar.gz::https://github.com/artemsen/swayimg/archive/v$pkgver.tar.gz")
+source=("swayimg-$pkgver.tar.gz::https://github.com/artemsen/swayimg/archive/v$pkgver.tar.gz")
 sha256sums=('342952aa30f62f163dfcb36448d7f2a860abf972bb24690d2e49b28b6f2ba7cc')
 
 build() {
-    arch-meson build ${pkgname}-${pkgver} \
+    arch-meson build swayimg-${pkgver} \
         -D bash=enabled \
         -D desktop=true \
         -D exif=enabled \
@@ -66,7 +66,7 @@ build() {
 package(){
     DESTDIR="$pkgdir" ninja -C build install
 
-    cd "$pkgname-$pkgver"
-    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
-    install -Dm644 README.md -t "$pkgdir/usr/share/doc/$pkgname/"
+    cd "swayimg-$pkgver"
+    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/swayimg/"
+    install -Dm644 README.md -t "$pkgdir/usr/share/doc/swayimg/"
 }
