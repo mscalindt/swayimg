@@ -40,7 +40,7 @@ depends=(
     'openexr'
 )
 url='https://github.com/mscalindt/swayimg'
-source=("swayimg-$pkgver.tar.gz::https://github.com/artemsen/swayimg/archive/v$pkgver.tar.gz")
+source=("swayimg-$pkgver.tar.gz::https://github.com/mscalindt/swayimg/archive/v$pkgver.tar.gz")
 sha256sums=('342952aa30f62f163dfcb36448d7f2a860abf972bb24690d2e49b28b6f2ba7cc')
 
 build() {
